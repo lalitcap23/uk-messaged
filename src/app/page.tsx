@@ -1,11 +1,9 @@
-// app/contact/page.tsx
 'use client';
 
 import { useState, FormEvent } from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
 
-// This would be added to your layout.tsx since metadata can't be exported from client components
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -48,7 +46,6 @@ export default function ContactPage() {
           success: true,
           message: 'Your message has been sent successfully!'
         });
-        // Reset form after successful submission
         setFormData({
           name: '',
           email: '',
