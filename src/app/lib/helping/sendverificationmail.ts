@@ -4,14 +4,15 @@ import { ApiResponse } from "@/app/type/ApiResponse";
 
 export async function sendVerificationEmail(
     email: string,
-    username: string,
+    username: string,   
     verifycode: string
 ): Promise<ApiResponse> {
     try {
-        await resend.({
-            to: email,
-            subject: "Verify your email",
-            html: `<p>Hi ${username}, your verification code is: <b>${verifycode}</b></p>`,
+        await resend.emails.send({
+            from: 'Acme <onboarding@resend.dev>',
+            to: ['email'], 
+            subject: 'ingotext | verification  code',
+            react: VerificationEmail({ username, otp: verifycode }),
         });
 
         return { success: true, message: "Verification email sent successfully" };
