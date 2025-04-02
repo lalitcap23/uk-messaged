@@ -15,21 +15,28 @@ export async function POST(request: Request) {
         username,
         password: hashedPassword,
         });
-        await newUser.save();
+        await newUser.save(); 
     
         const verifycode = Math.floor(100000 + Math.random() * 900000).toString();
         console.log("verifycode", verifycode);
     
         const response = await sendVerificationEmail(email, username, verifycode);            
         console.log("response", response);
+        
+        
+        const existingusernameverification = UserModal.findOne({
+            username,
+            isverified: true,
+        })
     
+        
         return new Response(JSON.stringify(response), {
         status: 200,
         headers: {
             "Content-Type": "application/json",
         },
         });
-    } catch (error) {
+    } catch (error) { 
         console.error("Error:", error);
         return new Response(
         JSON.stringify({ success: false, message: "Internal server error" }),
