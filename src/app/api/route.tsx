@@ -10,7 +10,6 @@ export async function POST(request: Request) {
     const { email, username, password } = body;
     console.log("body", body);
     
-    // Check if username already exists
     const existingUsername = await UserModal.findOne({ username });
     if (existingUsername) {
       return Response.json({
