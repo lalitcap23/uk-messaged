@@ -1,7 +1,7 @@
-import dbConnect from "../lib/dbconnection";
-import UserModal from "../model/user";
+import dbConnect from "../../lib/dbconnection";
+import UserModal from "../../model/user";
 import bcrypt from "bcrypt";
-import { sendVerificationEmail } from "../lib/helping/sendverificationmail";
+import { sendVerificationEmail } from "../../lib/helping/sendverificationmail";
 
 export async function POST(request: Request) {
   try {
@@ -75,3 +75,4 @@ export async function POST(request: Request) {
     });
   }
 }
+//
