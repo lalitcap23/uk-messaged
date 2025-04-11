@@ -1,7 +1,7 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
-import { connectDB } from "../../../lib/helpling/dbconnection";
+import { connectDB } from "../../../lib/helping/dbconnection";//../../../lib/helpers/dbconnection"
 import { UserModal } from "../../../../models/user";
 
 export const authOptions: NextAuthOptions = {
@@ -58,14 +58,23 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
-  callbacks: {
+   callbacks: {
     async jwt({ token, user }) {
-      if (user) {
-        token.user = user;
+       if (user) {
+        token._id = user._id?.toString() 
+        token.isverified = user.isverified;
+        token.username = user.username;
+        token.isAcceptingMessages = user.isAcceptingMessages;
       }
       return token;
-    },
-    async session({ session}) {
+    }, 
+    async session({ session, token }) {
+      if (token) {
+        session.user._id = token._id;
+        session.user.isverified = token.isverified;
+        session.user.username = token.username;
+        session.user.isAcceptingMessages = token.isAcceptingMessages;
+      }
       
       return session;
     },
