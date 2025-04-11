@@ -1,9 +1,8 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
-import { connectDB } from "../../../lib/helping/dbconnection";//../../../lib/helpers/dbconnection"
-import { UserModal } from "../../../../models/user";
-
+import connectDB from "../../../lib/helping/dbconnection";
+import UserModal from "../../../model/user";
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
@@ -17,7 +16,7 @@ export const authOptions: NextAuthOptions = {
         password: {
           label: "Password",
           placeholder: "Enter your password",
-          type: "password",
+          type: "password", 
         },
       },
       async authorize(credentials: any): Promise<any> {
@@ -58,16 +57,16 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
-   callbacks: {
+  callbacks: {
     async jwt({ token, user }) {
-       if (user) {
-        token._id = user._id?.toString() 
+      if (user) {
+        token._id = user._id?.toString()
         token.isverified = user.isverified;
         token.username = user.username;
         token.isAcceptingMessages = user.isAcceptingMessages;
       }
       return token;
-    }, 
+    },
     async session({ session, token }) {
       if (token) {
         session.user._id = token._id;
@@ -75,7 +74,7 @@ export const authOptions: NextAuthOptions = {
         session.user.username = token.username;
         session.user.isAcceptingMessages = token.isAcceptingMessages;
       }
-      
+
       return session;
     },
   },
